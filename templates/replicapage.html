@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title> Replica Predictor </title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
+    <link href = "{{ url_for('static', filename = 'style.css')}}
+     " rel = "stylesheet" />
+</head>
+<body>
+    <h1 id ="whitetext"> Replica Predictor </h1>
+    <div id = "loader"> </div>
+    <div id = "result"></div>
+    <button onmouseover="this.style.backgroundColor='white'; this.style.cursor= 'pointer'; this.style.color = '#ab12e3'"; 
+    onmouseout="this.style.backgroundColor='#ab12e3'; this.style.color = 'white';"
+ style = " background-color: #ab12e3; 
+    display: none;
+    color: white; 
+    padding: 0.8em; 
+    width: 175px; 
+    position: fixed;
+    top: 85%;
+    left: 45%;
+    border-radius: 0.2em;
+    font-family: 'Montserrat'; 
+    font-size: 15px; 
+    margin-bottom: 150px;" id = "reset"> Check another item </button>
+    <div class = "options">
+    <form id = "form" onsubmit>
+    <p style = "margin-top: 60px;" class = "titles"> Select The Item You Are Looking To Buy</p>
+        <div class = "custom-select">
+        <select name = "items" id = "items" onchange = "updateMaxPrice(); validatePrice()">
+            <option value="" disabled selected>Select an option</option>
+            <option value = 1 data-max="179.99" > Airpods Gen 4 </option>
+            <option value =  2 data-max="670" > Moncler Windbreaker </option>
+            <option value = 3 data-max="1075"> Canada Goose Puffer Jacket </option>
+            <option value = 4 data-max="275"> Moncler Eclipse Beanie </option>
+        </select>
+        </div>
+        <br><br>
+     <p style = "margin-top: 25px; "class = "titles"> Select The Marketplace You Are Buying The Item From</p>
+    <div class = "custom-select">
+        <select name = "markets" id = "markets">
+            <option value="" disabled selected>Select an option</option>
+            <option value = 0 >Vinted</option>
+            <option value = 1 >Depop</option>
+            <option value = 2 >Ebay</option>
+        </select>
+        <br><br>
+        </div>
+        <p style = "margin-top: 5px;" class = "titles"> What Is The Price Of The Item? </p>
+        <div class = "custom-select">
+        <label style = "color: white"> £ <input min = "0" step = "0.01" max = "100" style = "background-color: white; padding: 0.6em; font-size: 10; font-family: 'Montserrat' ;  color:#ab12e3 " type = "number" id = "price" name = "price"></label><br><br>
+        </div>
+        <span id = "priceError"></span>
+
+        <script>
+        const itemSelect = document.getElementById('items');
+        const priceInput = document.getElementById('price');
+        const priceError = document.getElementById('priceError');
+
+        function updateMaxPrice() {
+            const userSelection = itemSelect.options[itemSelect.selectedIndex];
+            const maxPrice = parseFloat(userSelection.getAttribute('data-max'));
+            
+            priceInput.max = maxPrice;
+            priceInput.value = '';
+            priceError.textContent = '';
+            priceInput.setCustomValidity('');
+
+        }
+
+        function validatePrice(){
+            const maxPrice = parseFLoat(priceInput.max);
+            const val = parseFloat(priceInput.value);
+
+            if(!isNaN(val) && val > maxPrice){
+                priceError.textContent = `Price cannot exceed the retail price of the item (£${maxPrice})`;
+                priceInput.value = maxPrice;
+                priceInput.setCustomValidity('Price too high');
+
+            } else {
+                priceError.textContent = '';
+                priceInput.setCustomValidity('');
+            }
+        }
+        updateMaxPrice();
+
+        </script>
+         <p class = "titles"> How Many Reviews Does The Seller Have?</p>
+         <div class = "custom-select">
+        <input style = "background-color: white; padding: 0.6em; font-size: 10; font-family: 'Montserrat' ; color: #ab12e3" type = "number" id = "reviews" name = "reviews"><br><br>
+        </div>
+         <p class = "titles"> How Would You Describe Their Seller Rating?</p>
+    <div class = "custom-select">
+        <select name = "rating" id = "rating">
+            <option value="" disabled selected>Select an option</option>
+            <option value = 0 >Abysmal</option>
+            <option value = 1 >Poor</option>
+            <option value = 2 >Fair</option>
+            <option value = 3 >Good</option>
+            <option value = 4 >Very Good</option>
+            <option value = 5 >Excellent</option>
+
+
+        </select>
+        <br><br>
+        </div>
+          <p class = "titles"> Has The Seller Provided Any Proof Of Purchase?</p>
+    <div class = "custom-select">
+        <select name = "proof" id = "proof">
+            <option value="" disabled selected>Select an option</option>
+            <option value = 1 >Yes</option>
+            <option value = 0 >No</option>
+        </select>
+        <br><br>
+        </div>
+         <p style = "margin-top: 20px;" class = "titles"> Has The Seller Justified Why They Are Selling The Item?</p>
+    <div class = "custom-select">
+        <select name = "justify" id = "justify">
+            <option value="" disabled selected>Select an option</option>
+            <option value = 1 >Yes</option>
+            <option value = 0 >No</option>
+        </select>
+        <br><br>
+        <input type = "submit" class = "predictbutton" value = "Check Authenticity">
+    </input>
+    </form>
+    </div>
+    <script>
+        const form = document.getElementById('form')
+        const loader = document.getElementById('loader');
+        const result = document.getElementById('result');
+        const options = document.querySelector('.options');
+        document.addEventListener('DOMContentLoaded', function() {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+        const items = document.getElementById('items');
+        const markets = document.getElementById('markets');
+        const price = document.getElementById('price');
+        const reviews = document.getElementById('reviews');
+        const rating = document.getElementById('rating');
+        const proof = document.getElementById('proof');
+        const justify = document.getElementById('justify');
+            if (items.value === "" || markets.value === "" || price.value === "" || reviews.value === "" || rating.value === "" || proof.value === "" || justify.value === "") {
+                alert("Please fill in all fields before submitting.");
+                return;;
+            };
+        
+            loader.style.display = 'block';
+            options.style.display = 'none';
+            result.innerHTML = '';
+
+            const formData = new FormData(form);
+            fetch ('/submit', {
+                method: 'POST',
+                body: formData            
+        })
+        .then(response => response.json())
+        .then(data => {
+            loader.style.display = 'none';
+            result.innerHTML = `<p style = "border-radius: 0.6em; padding: 5em; text-align: center; background-color:#be47cc; color:white; position: fixed; top: 35%; left: 35%">${data.result}</p>`;
+            document.getElementById('reset').style.display = 'block';
+        })
+        .catch(() => {
+            loader.style.display = 'none';
+            result.innerHTML = '<p style = "color:red;"> Error Occurred </p>';
+        });
+
+    });
+});
+document.getElementById('reset').addEventListener('click',function() {
+    document.getElementById('form').reset();
+    document.querySelector('.options').style.display = 'block';
+    document.getElementById('result').innerHTML = '';
+    this.style.display = 'none';
+
+    this.style.backgroundColor = '#ab12e3';
+    this.style.color = 'white';
+
+    this.style.display = 'none';
+});
+
+
+    </script>
+
+        </div>
+        
+
+
+
+
+
+
+
+
+
+
+
+        </select>
+    </form>
+
+
+
+
+    
+</body>
+</html>

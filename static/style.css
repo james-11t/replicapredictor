@@ -1,0 +1,88 @@
+body {
+background-color: #242423;
+font-family: 'Montserrat';
+}
+
+#whitetext {
+color: white;
+font-weight: bold;
+text-align: center;
+margin-top: 80px;
+}
+
+.titles{
+    color: white;
+    text-align: center;
+    font-size: 20px;
+    margin-top: 110px;
+
+}
+
+.options{
+    text-align: center;
+    margin-top: 40px;
+   
+
+}
+
+#loader{
+    display: none;
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid #3498db;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin-top: 20px;
+    position: fixed;
+    top: 50%;
+    left: 50%
+}
+ @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+.custom.select{
+    min-height: 200px;
+    position: relative;
+}
+.custom-select select{
+    margin-top: 10px;
+    margin-bottom: 130px;
+    appearance: none;
+    background-color: white;
+    font-size: 1rem;
+    padding: 0.6em;
+    text-align: center;
+    font-family: 'Montserrat';
+    color: #ab12e3;
+    border-radius: 0.2em
+
+}
+
+#priceError{
+    color: white;
+    text-align: center;
+}
+
+.predictbutton{
+    background-color: #ab12e3; 
+    color: white; 
+    padding: 0.8em; 
+    width: 175px; 
+    border-radius: 0.2em;
+    font-family: 'Montserrat'; 
+    font-size: 15px; 
+    margin-bottom: 150px;
+
+}
+
+.predictbutton:hover {
+    background-color: white;
+    color:#ab12e3;
+    cursor:pointer;
+
+}
+
+
+
