@@ -44,9 +44,7 @@ def replicamodel(data,userinput):
 
     x_train, x_test, y_train, y_test = train_test_split(x,y,random_state = 42,test_size = 0.2)
     #We split the data into training and test sets. This will allow us to train the model.
-    #feature_names = x_train.columns.tolist()
-    #print (feature_names)
-    #joblib.dump(feature_names, 'features.joblib')
+   
 
     rf = RandomForestClassifier(n_estimators=100, random_state = 42, class_weight='balanced_subsample')
     rf.fit(x_train, y_train)
@@ -67,5 +65,5 @@ def replicamodel(data,userinput):
 
     return authentic
 
-   #This is a machine learning model that predicts whether an item on an online marketplace is likely to be authentic or not
+   #This is a machine learning model that predicts whether an item in an online marketplace is likely to be authentic or not
 
