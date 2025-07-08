@@ -1,6 +1,6 @@
 # Replica Predictor
 
-A full stack Python project using machine learning to provide a solution to the growing number of counterfeit products on online marketplaces.
+A full stack project using machine learning to provide a solution to the growing number of counterfeit products on online marketplaces.
 
 # Functionality
 
