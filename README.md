@@ -14,7 +14,7 @@ A full stack project using machine learning to provide a solution to the growing
 
 • Collect more data for each item to improve model accuracy 
 <br>
-• Include more items to provide a wider range of items which tailor to the needs of the user
+• Include more items to allow for more variety in item selection
 
 # How To Run
 
